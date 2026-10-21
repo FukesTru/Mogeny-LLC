@@ -133,6 +133,10 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
   font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass-ink);
 }
 .band-navy .eyebrow, .band-green .eyebrow { color: #E2C7A6; }
+.hero .eyebrow::before {
+  content: ""; display: inline-block; width: 36px; height: 2px; margin-right: 14px; vertical-align: middle;
+  background: var(--brass); transform-origin: left center;
+}
 .section-head { margin-bottom: 40px; }
 .section-head h2 + p, .section-head .lead { margin-top: 16px; }
 .lead { font-size: var(--fs-lead); line-height: 1.55; color: var(--muted); }
@@ -205,7 +209,7 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
 .brand:hover { color: var(--navy); }
 .brand-mark { width: 38px; height: 38px; flex: none; }
 .brand-word { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1; }
-.brand-word small { font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.16em; margin-left: 6px; color: var(--brass-ink); vertical-align: 3px; }
+.brand-word small { font-family: var(--sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.16em; margin-left: 1px; color: var(--brass-ink); vertical-align: 3px; }
 
 .nav { display: none; }
 .header-actions { display: none; }
@@ -345,10 +349,11 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
 .page-hero-aside strong { display: block; color: var(--navy); font-size: 1.0625rem; }
 
 /* Photographs. One radius, one shadow, cropped to fill their frame. */
-.page-hero-media, .media { margin: 0; }
+.page-hero-media, .media { margin: 0; border-radius: calc(var(--radius) + 6px); box-shadow: var(--shadow); }
+.page-hero-media { overflow: hidden; }
 .page-hero-media img, .media img {
   width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--cream-deep);
-  border-radius: calc(var(--radius) + 6px); box-shadow: var(--shadow);
+  border-radius: calc(var(--radius) + 6px);
 }
 .media img { aspect-ratio: 3 / 2; }
 
@@ -575,22 +580,68 @@ a.card:hover h3 { color: var(--brass-ink); }
 [data-reveal]:nth-child(2) { --d: 0.07s; } [data-reveal]:nth-child(3) { --d: 0.14s; } [data-reveal]:nth-child(4) { --d: 0.21s; }
 [data-reveal]:nth-child(5) { --d: 0.28s; } [data-reveal]:nth-child(6) { --d: 0.35s; }
 
-/* Opening transition. Plays once as a page opens: the header fades in, the hero settles and its lines rise in
-   order. Under a second, never blocks a tap (opacity only), and off entirely for reduced motion. */
-@media (prefers-reduced-motion: no-preference) {
-  .site-header { animation: intro-fade 0.6s ease both; }
-  .intro { animation: intro-rise 0.9s var(--ease) both; animation-delay: var(--intro, 0s); }
-  .intro-2 { --intro: 0.08s; } .intro-3 { --intro: 0.16s; } .intro-4 { --intro: 0.24s; } .intro-5 { --intro: 0.34s; } .intro-6 { --intro: 0.44s; }
-  .hero-bg img { animation: intro-settle 1.8s var(--ease) both; }
-  .page-hero-media img { animation: intro-settle 1.2s var(--ease) both 0.12s; }
-  .hero-strip li { animation: intro-fade 0.8s ease both 0.5s; }
-  .hero-strip li:nth-child(2) { animation-delay: 0.58s; } .hero-strip li:nth-child(3) { animation-delay: 0.66s; } .hero-strip li:nth-child(4) { animation-delay: 0.74s; }
+/* Opening screen, first page of a visit only (the class "opening" is set by a tiny script in the head, which
+   also skips it for reduced motion): navy screen, the brass M draws itself, the name rises in, then the screen
+   lifts away like a curtain. It never catches a tap (pointer-events none) and is gone within 1.7 seconds. */
+.opening-screen { display: none; }
+.opening { --open: 0.95s; }
+.opening .opening-screen {
+  position: fixed; inset: 0; z-index: 2147483600; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 20px; background: var(--navy); pointer-events: none;
+  animation: opening-lift 0.75s cubic-bezier(0.76, 0, 0.24, 1) 0.95s both;
 }
-/* Start at 0.01, not 0: browsers treat fully transparent text as not yet shown, which would make the page look
-   slower to speed tests than it is. 0.01 looks the same to a visitor. */
-@keyframes intro-rise { from { opacity: 0.01; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.opening-screen .os-mark { width: 84px; height: 84px; }
+.opening-screen .os-mark rect { fill: var(--navy-soft); animation: opening-pop 0.5s var(--ease) both; transform-box: fill-box; transform-origin: center; }
+.opening-screen .os-mark path { fill: none; stroke: var(--brass); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: opening-draw 0.6s var(--ease) 0.1s both; }
+.opening-screen .os-word { font-family: var(--serif); font-size: 2.5rem; font-weight: 600; line-height: 1; color: var(--white);
+  letter-spacing: -0.01em; animation: opening-rise 0.55s var(--ease) 0.35s both; }
+.opening-screen .os-word small { font-family: var(--sans); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.18em;
+  margin-left: 4px; color: #E2C7A6; vertical-align: 6px; }
+.opening-screen .os-line { width: 120px; height: 2px; background: var(--brass); transform-origin: center;
+  animation: opening-grow 0.5s var(--ease) 0.45s both; }
+@keyframes opening-lift { to { transform: translateY(-100%); visibility: hidden; } }
+@keyframes opening-pop { from { opacity: 0.01; transform: scale(0.86); } to { opacity: 1; transform: none; } }
+@keyframes opening-draw { to { stroke-dashoffset: 0; } }
+@keyframes opening-rise { from { opacity: 0.01; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes opening-grow { from { transform: scaleX(0); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .opening .opening-screen { display: none; } }
+
+/* Entrance, every page (it starts as the opening screen lifts, on the first page of a visit): the header drops
+   in, the city photo starts dark and close and settles back as the light comes up, the headline comes into
+   focus as it rises, a brass line draws in, and the service list and facts slide into place. All text is fully
+   shown within about 1.2 seconds of the entrance starting, nothing ever blocks a tap, and all of it is off for
+   reduced motion. The lists move without fading, so their text is never shown at low contrast. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-header { animation: intro-drop 0.6s var(--ease) both calc(var(--open, 0s) + 0s); }
+  .intro { animation: intro-rise 0.8s var(--ease) both; animation-delay: calc(var(--open, 0s) + var(--intro, 0.05s)); }
+  .intro-2 { --intro: 0.12s; } .intro-3 { --intro: 0.2s; } .intro-4 { --intro: 0.28s; } .intro-5 { --intro: 0.36s; } .intro-6 { --intro: 0.44s; }
+  h1.intro { animation-name: intro-focus; animation-duration: 1s; }
+  .hero-bg img { animation: intro-settle 2.2s var(--ease) both calc(var(--open, 0s) + 0s); }
+  .hero-bg::before {
+    content: ""; position: absolute; inset: 0; background: var(--navy); pointer-events: none;
+    animation: intro-lights 1.4s ease both calc(var(--open, 0s) + 0.05s);
+  }
+  .hero .eyebrow::before { animation: intro-draw 0.7s var(--ease) both calc(var(--open, 0s) + 0.25s); }
+  .page-hero-media img { animation: intro-settle-in 1.2s var(--ease) both calc(var(--open, 0s) + 0.2s); }
+  .hero-panel li { animation: intro-slide 0.7s var(--ease) both; animation-delay: calc(var(--open, 0s) + var(--li, 0.3s)); }
+  .hero-panel li:nth-child(2) { --li: 0.37s; } .hero-panel li:nth-child(3) { --li: 0.44s; } .hero-panel li:nth-child(4) { --li: 0.51s; }
+  .hero-panel li:nth-child(5) { --li: 0.58s; } .hero-panel li:nth-child(6) { --li: 0.65s; }
+  .hero-strip li { animation: intro-lift 0.7s var(--ease) both; animation-delay: calc(var(--open, 0s) + var(--li, 0.5s)); }
+  .hero-strip li:nth-child(2) { --li: 0.6s; } .hero-strip li:nth-child(3) { --li: 0.7s; } .hero-strip li:nth-child(4) { --li: 0.8s; }
+}
+/* Fades start at 0.01, not 0: browsers treat fully transparent text as not yet shown, which would make the page
+   look slower to speed tests than it is. 0.01 looks the same to a visitor. */
+@keyframes intro-drop { from { transform: translateY(-100%); } to { transform: none; } }
+@keyframes intro-rise { from { opacity: 0.01; transform: translateY(32px); } to { opacity: 1; transform: none; } }
+@keyframes intro-focus { from { opacity: 0.01; transform: translateY(40px); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
 @keyframes intro-fade { from { opacity: 0.01; } to { opacity: 1; } }
-@keyframes intro-settle { from { opacity: 0.01; transform: scale(1.06); } to { opacity: 1; transform: none; } }
+@keyframes intro-settle { from { transform: scale(1.14); } to { transform: none; } }
+@keyframes intro-settle-in { from { opacity: 0.01; transform: scale(1.12); } to { opacity: 1; transform: none; } }
+@keyframes intro-lights { from { opacity: 1; } to { opacity: 0; } }
+@keyframes intro-draw { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes intro-slide { from { transform: translateX(32px); } to { transform: none; } }
+@keyframes intro-lift { from { transform: translateY(16px); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
