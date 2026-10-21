@@ -1,0 +1,61 @@
+{
+  "business": {
+    "name": "Mogeny",
+    "known_as": "Mogeny",
+    "legal_name": "Mogeny LLC",
+    "owner": "Kamila Piotrowicz",
+    "street": "",
+    "city": "Chicago",
+    "state": "IL",
+    "postal_code": "",
+    "country": "US",
+    "phone": "(773) 964-2446",
+    "email": "hello@mogeny.com",
+    "website_current": "https://mogeny.com/",
+    "timezone": "America/Chicago"
+  },
+  "online": {
+    "facebook": "",
+    "instagram": "",
+    "google_business_profile": "",
+    "google_review_link": ""
+  },
+  "hours": "Call or email any time to set up an introductory call",
+  "areas_served": [
+    "Chicago, IL (in person and remote)",
+    "Remote clients anywhere in the US"
+  ],
+  "services": [
+    "Financial Management and Reporting",
+    "Bookkeeping",
+    "Controllership / CFO Services",
+    "Family Office & Estate Management",
+    "Data-Driven KPI Analysis",
+    "Forensic Accounting"
+  ],
+  "booking_system_current": "",
+  "brand": {
+    "colour_main": "#14213D",
+    "colour_accent": "#B8875A",
+    "colours_other": ["#F7F3EC", "#3E5C58", "#8A6440"],
+    "font": "Source Serif 4 (headings) + Inter (body)",
+    "notes": "No logo, colours or fonts supplied (onboarding form says 'I need one designed'). Agency defaults used: navy #14213D main, brass #B8875A accent (decoration and text on navy only; fails contrast as text on white), cream #F7F3EC tinted bands, deep green #3E5C58 secondary, darker brass #8A6440 for small text on light backgrounds. Typographic wordmark and simple SVG 'M' mark built in the brand colours as a stand-in until a real logo is designed."
+  },
+  "images": [
+    { "file": "favicon.png", "note": "512x512 site icon, brass 'M' mark on a navy rounded square. Built for the site, not a client logo" },
+    { "file": "apple-touch-icon.png", "note": "180x180 version of the same mark for phone home screens" },
+    { "file": "og-image.png", "note": "1200x630 social sharing image, navy with the Mogeny wordmark and the services line" }
+  ],
+  "assets_link": "https://drive.google.com/drive/folders/1RliDvX_gK5aIbtIymSepVK5lTq-GivuN",
+  "assets_note": "Client says fewer than 15 photos/videos are in the Drive folder. The folder needs a Google sign-in, so nothing from it is on the site yet.",
+  "must_keep": "Client has a sample website they like that fits these services and offered to share it. Ask for the link.",
+  "integrations": {
+    "form_embed": "",
+    "chat_widget": "",
+    "review_link": ""
+  },
+  "crm_location_id": "",
+  "vercel_project": "",
+  "preview_url": "",
+  "domain": "www.mogeny.com"
+}
