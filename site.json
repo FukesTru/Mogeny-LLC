@@ -37,21 +37,66 @@
   "brand": {
     "colour_main": "#14213D",
     "colour_accent": "#B8875A",
-    "colours_other": ["#F7F3EC", "#3E5C58", "#8A6440"],
+    "colours_other": [
+      "#F7F3EC",
+      "#3E5C58",
+      "#8A6440"
+    ],
     "font": "Source Serif 4 (headings) + Inter (body)",
     "notes": "No logo, colours or fonts supplied (onboarding form says 'I need one designed'). Agency defaults used: navy #14213D main, brass #B8875A accent (decoration and text on navy only; fails contrast as text on white), cream #F7F3EC tinted bands, deep green #3E5C58 secondary, darker brass #8A6440 for small text on light backgrounds. Typographic wordmark and simple SVG 'M' mark built in the brand colours as a stand-in until a real logo is designed."
   },
   "images": [
-    { "file": "favicon.png", "note": "512x512 site icon, brass 'M' mark on a navy rounded square. Built for the site, not a client logo" },
-    { "file": "apple-touch-icon.png", "note": "180x180 version of the same mark for phone home screens" },
-    { "file": "og-image.png", "note": "1200x630 social sharing image, navy with the Mogeny wordmark and the services line" }
+    {
+      "file": "favicon.png",
+      "note": "512x512 site icon, brass 'M' mark on a navy rounded square. Built for the site, not a client logo"
+    },
+    {
+      "file": "apple-touch-icon.png",
+      "note": "180x180 version of the same mark for phone home screens"
+    },
+    {
+      "file": "og-image.png",
+      "note": "1200x630 social sharing image, navy with the Mogeny wordmark and the services line"
+    },
+    {
+      "file": "images/chicago-river-downtown-1200.webp",
+      "note": "Chicago River between downtown towers in morning light. Home page areas section and Chicago page hero. 640px version chicago-river-downtown-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    },
+    {
+      "file": "images/desk-receipts-bookkeeping-1200.webp",
+      "note": "Walnut desk with clipped receipts, a statement, a laptop spreadsheet, pen and coffee. Bookkeeping page hero. 640px version desk-receipts-bookkeeping-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    },
+    {
+      "file": "images/financial-reports-charts-1200.webp",
+      "note": "Printed financial reports with navy and brass bar and line charts on a linen desk. Financial reporting page hero. 640px version financial-reports-charts-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    },
+    {
+      "file": "images/meeting-room-chicago-view-1200.webp",
+      "note": "Empty meeting room with a walnut table, notebook and chart, window onto downtown Chicago. Controller and CFO page hero. 640px version meeting-room-chicago-view-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    },
+    {
+      "file": "images/home-study-desk-1200.webp",
+      "note": "Home study desk with brass lamp, leather portfolio, house keys and folders. Family office page hero. 640px version home-study-desk-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    },
+    {
+      "file": "images/tablet-kpi-charts-1200.webp",
+      "note": "Tablet showing simple navy and brass charts beside a printed chart and tea. KPI analysis page hero. 640px version tablet-kpi-charts-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    },
+    {
+      "file": "images/magnifying-glass-bank-statements-1200.webp",
+      "note": "Brass magnifying glass on highlighted bank statements with a red pencil. Forensic accounting page hero. 640px version magnifying-glass-bank-statements-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    },
+    {
+      "file": "images/home-office-laptop-1200.webp",
+      "note": "Home office desk by a window with a laptop spreadsheet, notebook and phone. Remote clients page hero. 640px version home-office-laptop-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    }
   ],
   "assets_link": "https://drive.google.com/drive/folders/1RliDvX_gK5aIbtIymSepVK5lTq-GivuN",
   "assets_note": "Client says fewer than 15 photos/videos are in the Drive folder. The folder needs a Google sign-in, so nothing from it is on the site yet.",
   "must_keep": "Client has a sample website they like that fits these services and offered to share it. Ask for the link.",
   "integrations": {
-    "form_embed": "",
-    "chat_widget": "",
+    "form_embed": "<iframe\n    src=\"https://api.leadconnectorhq.com/widget/form/koMKrniwMhVcAif1sx5S\"\n    style=\"width:100%;height:100%;border:none;border-radius:10px\"\n    id=\"inline-koMKrniwMhVcAif1sx5S\"\n    data-layout=\"{'id':'INLINE'}\"\n    data-trigger-type=\"alwaysShow\"\n    data-trigger-value=\"\"\n    data-activation-type=\"alwaysActivated\"\n    data-activation-value=\"\"\n    data-deactivation-type=\"neverDeactivate\"\n    data-deactivation-value=\"\"\n    data-form-name=\"Website Form (Mogeny LLC)\"\n    data-height=\"undefined\"\n    data-layout-iframe-id=\"inline-koMKrniwMhVcAif1sx5S\"\n    data-form-id=\"koMKrniwMhVcAif1sx5S\"\n    data-cookie-consent=\"true\"\n    data-cookie-consent-provider=\"auto\"\n    title=\"Website Form (Mogeny LLC)\"\n    \n        >\n</iframe>\n<script src=\"https://link.msgsndr.com/js/form_embed.js\"></script>",
+    "chat_widget": "<script src=\"https://widgets.leadconnectorhq.com/loader.js\" data-resources-url=\"https://widgets.leadconnectorhq.com/chat-widget/loader.js\" data-widget-id=\"6ad91c9eae7fc72f34068758\"></script>",
     "review_link": ""
   },
   "crm_location_id": "",

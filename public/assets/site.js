@@ -1,5 +1,5 @@
-// Mogeny LLC site script: mobile menu, desktop dropdowns, Contact us scrolling, built-in chat panel,
-// the built-in contact form (opens the visitor's email app addressed to the firm) and scroll motion.
+// Mogeny LLC site script: mobile menu, desktop dropdowns, Contact us scrolling and scroll motion.
+// The contact form and the chat widget come from the CRM embeds and run their own scripts.
 (function () {
   var root = document.documentElement;
   root.classList.remove('no-js');
@@ -23,7 +23,6 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       setMenu(false);
-      closeChat();
       document.querySelectorAll('.nav .has-sub.open').forEach(function (li) { setSub(li, false); });
     }
   });
@@ -53,22 +52,19 @@
     return h ? h.getBoundingClientRect().height : 0;
   }
   function barHeight() {
-    var bar = document.querySelector('.mobile-bar');
+    var bar = document.querySelector('.mobile-blur');
     return bar && getComputedStyle(bar).display !== 'none' ? bar.getBoundingClientRect().height : 0;
   }
   function goToForm() {
     var form = document.getElementById('contact-form');
     if (!form) { window.location.href = '/contact/#contact'; return; }
     setMenu(false);
-    closeChat();
     var top = headerHeight();
     var room = window.innerHeight - top - barHeight();
     var rect = form.getBoundingClientRect();
     var y = window.scrollY + rect.top - top;
     if (rect.height < room) y -= (room - rect.height) / 2;
     window.scrollTo({ top: Math.max(0, y), behavior: reduceMotion ? 'auto' : 'smooth' });
-    var first = form.querySelector('input, select, textarea');
-    if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, reduceMotion ? 0 : 600);
     if (history.replaceState) history.replaceState(null, '', '#contact');
   }
   document.addEventListener('click', function (e) {
@@ -80,54 +76,6 @@
   });
   if (location.hash === '#contact') {
     window.addEventListener('load', function () { setTimeout(goToForm, 50); });
-  }
-
-  // Built-in chat panel
-  var panel = document.getElementById('chat-panel');
-  var chatButtons = document.querySelectorAll('[data-chat-open]');
-  function openChat() {
-    if (!panel) return;
-    setMenu(false);
-    panel.classList.add('open');
-    panel.setAttribute('aria-hidden', 'false');
-    chatButtons.forEach(function (b) { b.setAttribute('aria-expanded', 'true'); });
-    var c = panel.querySelector('.chat-close');
-    if (c) c.focus({ preventScroll: true });
-  }
-  function closeChat() {
-    if (!panel || !panel.classList.contains('open')) return;
-    panel.classList.remove('open');
-    panel.setAttribute('aria-hidden', 'true');
-    chatButtons.forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
-  }
-  chatButtons.forEach(function (b) {
-    b.addEventListener('click', function () { panel && panel.classList.contains('open') ? closeChat() : openChat(); });
-  });
-  if (panel) panel.querySelector('.chat-close').addEventListener('click', closeChat);
-
-  // Built-in contact form: checks the fields, then opens the visitor's email app with the message to the firm
-  var form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (!form.reportValidity()) return;
-      var f = form.elements;
-      var to = form.getAttribute('data-to');
-      var lines = [
-        'Name. ' + f.name.value,
-        'Phone. ' + (f.phone.value || 'not given'),
-        'Email. ' + f.email.value,
-        '',
-        f.message.value,
-        '',
-        'Sent from the contact form on ' + location.href
-      ];
-      var href = 'mailto:' + to + '?subject=' + encodeURIComponent('Website enquiry from ' + f.name.value) +
-        '&body=' + encodeURIComponent(lines.join('\n'));
-      var status = form.querySelector('.form-status');
-      if (status) status.classList.add('show');
-      window.location.href = href;
-    });
   }
 
   // Scroll motion: sections settle into place as they come into view

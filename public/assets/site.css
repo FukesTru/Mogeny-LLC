@@ -49,7 +49,8 @@
   --header-h: 68px;
   --bar-h: 112px;
   --btn-h: 54px;
-  --round: 56px;
+  --round: 58px;
+  --bar-bottom: 20px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
@@ -244,7 +245,7 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
 /* Mobile menu */
 .mobile-menu {
   position: fixed; inset: var(--header-h) 0 0 0; z-index: 80; background: var(--white);
-  overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px var(--pad-x) 200px;
+  overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px var(--pad-x) 240px;
   opacity: 0; visibility: hidden; transform: translateY(-8px);
   transition: opacity 0.22s ease, transform 0.22s var(--ease), visibility 0s linear 0.22s;
 }
@@ -312,11 +313,19 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
 @media (min-width: 960px) { .page-hero { padding: 96px 0 104px; } }
 .page-hero .answer { color: var(--ink); }
 .page-hero-grid { display: grid; gap: 40px; }
-@media (min-width: 1040px) { .page-hero-grid { grid-template-columns: 8fr 4fr; gap: 72px; align-items: end; } .page-hero-grid.solo { grid-template-columns: 1fr; } }
+@media (min-width: 1040px) { .page-hero-grid { grid-template-columns: 8fr 4fr; gap: 72px; align-items: end; } .page-hero-grid.solo { grid-template-columns: 1fr; } .page-hero-grid.has-media { grid-template-columns: 6fr 5fr; align-items: center; } }
 .page-hero-aside { border-left: 3px solid var(--brass); padding: 4px 0 4px 22px; }
 .page-hero-aside p { margin: 0 0 6px; color: var(--muted); font-size: var(--fs-small); }
 .page-hero-aside a { font-weight: 600; text-decoration: none; }
 .page-hero-aside strong { display: block; color: var(--navy); font-size: 1.0625rem; }
+
+/* Photographs. One radius, one shadow, cropped to fill their frame. */
+.page-hero-media, .media { margin: 0; }
+.page-hero-media img, .media img {
+  width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--cream-deep);
+  border-radius: calc(var(--radius) + 6px); box-shadow: var(--shadow);
+}
+.media img { aspect-ratio: 3 / 2; }
 
 /* Cards. Equal height in a row, link pinned to the bottom, never the same colour as their section. */
 .card {
@@ -462,26 +471,10 @@ a.card:hover h3 { color: var(--brass-ink); }
 @media (min-width: 600px) { .form-card { padding: 32px 36px; } }
 .band-white .form-card { background: var(--cream); }
 .form-card h3 { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 16px; }
-.form-card .form-intro { color: var(--muted); font-size: var(--fs-small); margin-bottom: 22px; }
-.form-grid { display: grid; gap: 14px; }
-.form-grid .half { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.field label { display: block; font-size: 0.9375rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; white-space: nowrap; }
-.field label .opt { font-weight: 400; color: var(--muted); }
-.field input, .field select, .field textarea {
-  width: 100%; min-height: 48px; padding: 11px 14px; font: inherit; font-size: 1rem; color: var(--ink);
-  background: var(--white); border: 1px solid #CFC6B7; border-radius: 10px; transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-.field textarea { min-height: 84px; height: 84px; resize: vertical; }
-.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(184, 135, 90, 0.35); }
-.field .hint { font-size: 0.8125rem; color: var(--muted); margin-top: 6px; line-height: 1.4; }
-.consent { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; font-size: 0.8125rem; color: var(--muted); line-height: 1.45; }
-.consent input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--navy); }
-.form-card .btn { width: 100%; margin-top: 4px; }
+.form-card .form-intro { color: var(--muted); font-size: var(--fs-small); margin-bottom: 18px; }
+.form-embed { min-height: 600px; scroll-margin-top: calc(var(--header-h) + 12px); }
+.form-embed iframe { display: block; width: 100%; min-height: 600px; }
 .form-note { font-size: 0.8125rem; color: var(--muted); margin-top: 12px; line-height: 1.4; }
-.form-status { display: none; margin-top: 14px; padding: 14px 16px; border-radius: 10px; background: var(--cream); color: var(--ink); font-size: 0.9375rem; }
-.form-status.show { display: block; }
-.band-white .form-status { background: var(--white); }
-
 /* Footer */
 .footer-cta { background: var(--navy); color: rgba(255, 255, 255, 0.86); padding: 64px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
 @media (min-width: 960px) { .footer-cta { padding: 80px 0; } }
@@ -508,60 +501,33 @@ a.card:hover h3 { color: var(--brass-ink); }
 .footer-legal-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 .footer-disclaimer { color: rgba(255, 255, 255, 0.62); font-size: 0.8125rem; line-height: 1.6; }
 
-/* Mobile action bar: call left, contact middle, chat right. Same size, icons only, over a soft blur. */
-.mobile-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 120; height: var(--bar-h); pointer-events: none; }
-.mobile-bar .blur {
-  position: absolute; inset: 0; pointer-events: none;
+/* Mobile action bar: call left, contact middle, the CRM chat button right. Same size and level as the chat
+   button (measured from the widget: 58px, 20px from the bottom and side), icons only, over a soft blur.
+   The blur sits below the chat widget so its button stays sharp. The two buttons sit above the widget, whose
+   invisible container spreads over the middle of the bar while its greeting bubble shows. */
+.mobile-blur {
+  position: fixed; left: 0; right: 0; bottom: 0; height: var(--bar-h); z-index: 120; pointer-events: none;
   background: linear-gradient(to top, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   -webkit-mask-image: linear-gradient(to top, #000 0%, #000 45%, rgba(0, 0, 0, 0.6) 70%, transparent 100%);
   mask-image: linear-gradient(to top, #000 0%, #000 45%, rgba(0, 0, 0, 0.6) 70%, transparent 100%);
 }
-.mobile-bar .bar-row {
-  position: absolute; left: 0; right: 0; bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-  display: flex; justify-content: space-between; align-items: center; padding: 0 24px;
-}
 .round-btn {
-  pointer-events: auto; width: var(--round); height: var(--round); border-radius: 50%; border: 0; padding: 0;
-  display: grid; place-items: center; cursor: pointer; text-decoration: none;
+  position: fixed; z-index: 2147483000; bottom: var(--bar-bottom); width: var(--round); height: var(--round);
+  border-radius: 50%; border: 0; padding: 0; display: grid; place-items: center; cursor: pointer; text-decoration: none;
   box-shadow: 0 8px 22px rgba(14, 24, 46, 0.28); transition: transform 0.2s var(--ease);
 }
 .round-btn .icon { width: 24px; height: 24px; }
 .round-btn:active { transform: scale(0.96); }
-.round-call { background: var(--green); color: var(--white); }
-.round-contact { background: var(--navy); color: var(--white); }
-.round-chat { background: var(--brass); color: var(--navy); }
+.round-call { left: var(--bar-bottom); background: var(--green); color: var(--white); }
+.round-contact { left: 50%; margin-left: calc(var(--round) / -2); background: var(--navy); color: var(--white); }
 .round-call:hover, .round-contact:hover { color: var(--white); }
-.round-chat:hover { color: var(--navy); }
-.chat-desktop { display: none; }
 @media (max-width: 1099px) {
   .site-footer { padding-bottom: calc(40px + var(--bar-h)); }
 }
 @media (min-width: 1100px) {
-  .mobile-bar { display: none; }
-  .chat-desktop { display: grid; position: fixed; right: 28px; bottom: 28px; z-index: 120; }
+  .mobile-blur, .round-btn { display: none; }
 }
-
-/* Built-in chat panel. It sends nothing anywhere: it offers call, text, email and the form. */
-.chat-panel {
-  position: fixed; z-index: 130; right: 16px; left: 16px; bottom: calc(var(--bar-h) + 4px);
-  background: var(--white); border-radius: 18px; box-shadow: 0 24px 60px rgba(14, 24, 46, 0.28); border: var(--border);
-  padding: 22px; opacity: 0; visibility: hidden; transform: translateY(10px);
-  transition: opacity 0.2s ease, transform 0.2s var(--ease), visibility 0s linear 0.2s;
-}
-.chat-panel.open { opacity: 1; visibility: visible; transform: none; transition: opacity 0.2s ease, transform 0.2s var(--ease); }
-@media (min-width: 1100px) { .chat-panel { left: auto; width: 380px; right: 28px; bottom: 100px; } }
-.chat-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.chat-head .brand-mark { width: 40px; height: 40px; }
-.chat-head strong { display: block; color: var(--navy); font-size: 1.0625rem; }
-.chat-head span { display: block; font-size: 0.8125rem; color: var(--muted); }
-.chat-close { margin-left: auto; width: 40px; height: 40px; border: 0; background: var(--cream); color: var(--navy); border-radius: 50%; cursor: pointer; display: grid; place-items: center; }
-.chat-close .icon { width: 18px; height: 18px; }
-.chat-bubble { background: var(--cream); border-radius: 4px 14px 14px 14px; padding: 14px 16px; font-size: 0.9688rem; margin-bottom: 16px; }
-.chat-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.chat-actions .btn { min-height: 48px; padding: 0 14px; font-size: 0.9375rem; }
-.chat-actions .btn-email { background: var(--cream); color: var(--navy); }
-.chat-actions .btn-email:hover { background: var(--cream-deep); color: var(--navy); }
 
 /* Scroll motion. Only when scripts run, and never when reduced motion is asked for. */
 .js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); transition-delay: var(--d, 0s); }

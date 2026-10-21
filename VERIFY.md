@@ -11,7 +11,9 @@ A quick reply to each item is all we need.
 1. **Your logo.** You told us you need one designed. For now the site uses a simple "M" mark and
    the name "Mogeny" in type. Send the logo when it is ready and we will put it in.
 2. **Your photos.** Your Google Drive folder asks us to sign in, so we cannot open it. Please set
-   sharing to "Anyone with the link can view", or send the photos directly. Most useful:
+   sharing to "Anyone with the link can view", or send the photos directly. For now the site uses
+   a few computer-generated pictures of desks, reports and Chicago, with no people in them, and we
+   will swap in your own photos. Most useful:
    - a professional photo of you, for the home page and the About page
    - a photo of where you work or meet clients, if you have one
 3. **The sample website you like.** You mentioned one that fits your services. Please send the link.
@@ -24,7 +26,8 @@ A quick reply to each item is all we need.
    years of experience, previous roles and professional memberships.
 7. **The year Mogeny LLC started.**
 8. **Prices.** No prices are shown. If you can share starting prices or ranges for any service,
-   clients find that helpful. Is the introductory call free?
+   clients find that helpful. Your website form says "Get a free consultation". If the first call
+   is free, we will say so across the site.
 9. **Online profiles.** We found no Google Business Profile, Facebook, Instagram or LinkedIn. Send
    the links when they exist. A Google Business Profile helps people in Chicago find you.
 10. **Client reviews.** If you have reviews you have permission to publish, send them word for
@@ -119,12 +122,26 @@ A quick reply to each item is all we need.
 
 ## For the agency only (do not send this part)
 
-- **The three CRM pieces are missing**: form embed code, chat widget code and review link. Until
-  they arrive the site uses a built-in form and chat. The built-in form opens the visitor's own
-  email app with the message addressed to hello@mogeny.com. Nothing is sent to a server, so a lead
-  only arrives if the visitor presses send in their email app. Replace it with the CRM form before
-  launch. The built-in chat is a panel offering call, text, email and the form. No "leave us a
-  review" link exists anywhere yet.
+- **CRM pieces**: the form embed and chat widget are in, exactly as given (`site.json`
+  `integrations`), on every page. The **review link is still missing**, so no "leave us a review"
+  link exists anywhere yet.
+- **Things to change inside the CRM, not on the site** (the embeds must stay character for
+  character):
+  - The chat button is the CRM's default blue. Set it to the brand navy #14213D in the chat widget
+    settings so it matches the round call and contact buttons beside it.
+  - The form's "SEND TEXT" button is black, all capitals, in a different font. Brand navy #14213D,
+    sentence case and Inter would match the site.
+  - The form asks for name, phone and a message, with no email field and no checkbox agreeing to
+    text messages. Carriers usually require that consent for business texting (A2P 10DLC). Worth
+    adding in the form builder.
+  - The chat greeting says "I respond in 2 minutes". Check the client is happy to promise that.
+  - The greeting bubble covers part of the page on a phone until it is closed. The round call and
+    contact buttons stay tappable above it.
+- **Stand-in images**: 8 pictures in `public/images/` were generated with Higgsfield (desks,
+  reports, a meeting room, a home office and the Chicago River; no people, no readable text). The
+  brief says every picture should be the client's own, so `site.json` marks each one as a stand-in.
+  Replace them when the client's photos arrive. None is on the About page, so nothing pretends to
+  show Kamila or her office.
 - **Hosting**: the repo follows `CLAUDE.md` (Vercel, `vercel.json`, output `public`). The kit's
   `MASTER-PROMPT.md` says Cloudflare Pages instead, so `public/_headers` is also included; on
   Cloudflare it noindexes only the `*.pages.dev` address. `vercel_project` and `preview_url` in
