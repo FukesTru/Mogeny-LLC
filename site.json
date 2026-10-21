@@ -89,6 +89,10 @@
     {
       "file": "images/home-office-laptop-1200.webp",
       "note": "Home office desk by a window with a laptop spreadsheet, notebook and phone. Remote clients page hero. 640px version home-office-laptop-640.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work. Replace with the client's own photos when they arrive."
+    },
+    {
+      "file": "images/hero-chicago-skyline-1920.webp",
+      "note": "Chicago skyline at dusk across Lake Michigan, behind the home page hero under a navy shade. Also hero-chicago-skyline-1280.webp and a portrait phone crop hero-chicago-skyline-phone.webp. AI-generated with Higgsfield as a stand-in. Not a photo of the client, their office or their work."
     }
   ],
   "assets_link": "https://drive.google.com/drive/folders/1RliDvX_gK5aIbtIymSepVK5lTq-GivuN",
@@ -102,5 +106,6 @@
   "crm_location_id": "",
   "vercel_project": "",
   "preview_url": "",
-  "domain": "www.mogeny.com"
+  "domain": "www.mogeny.com",
+  "fonts": "Self-hosted in public/fonts with their OFL licences: Inter (variable, weights 400 to 600) and Mogeny Serif, which is Source Serif 4 trimmed to weights 500 to 600 with optical size fixed at 48 and renamed as the licence asks for modified copies. Latin subset only."
 }

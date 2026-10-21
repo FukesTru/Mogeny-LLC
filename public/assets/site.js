@@ -1,5 +1,5 @@
-// Mogeny LLC site script: mobile menu, desktop dropdowns, Contact us scrolling and scroll motion.
-// The contact form and the chat widget come from the CRM embeds and run their own scripts.
+// Mogeny LLC site script: mobile menu, desktop dropdowns, loading the CRM form and chat widget when needed,
+// Contact us scrolling and scroll motion.
 (function () {
   var root = document.documentElement;
   root.classList.remove('no-js');
@@ -46,6 +46,43 @@
     document.querySelectorAll('.nav .has-sub.open').forEach(function (li) { if (!li.contains(e.target)) setSub(li, false); });
   });
 
+  // The CRM form and chat widget wait, exactly as given, inside <template> tags. Putting them on the page only
+  // when needed keeps their heavy scripts out of the first load.
+  function stamp(id) {
+    var tpl = document.getElementById(id);
+    if (!tpl || tpl.getAttribute('data-done')) return;
+    tpl.setAttribute('data-done', '1');
+    tpl.parentNode.insertBefore(tpl.content.cloneNode(true), tpl);
+  }
+  // The chat widget loads on the visitor's first scroll, tap, key press or mouse movement. The form loads once
+  // the visitor is within a screen or so of it and has interacted (or after 3.5 seconds there without
+  // interacting, as on the contact page), or the moment a Contact us button is pressed.
+  var interacted = false;
+  var formNear = false;
+  var interactionEvents = ['scroll', 'pointerdown', 'pointermove', 'touchstart', 'keydown', 'wheel'];
+  function onInteract() {
+    interactionEvents.forEach(function (ev) { window.removeEventListener(ev, onInteract, { passive: true }); });
+    interacted = true;
+    stamp('chat-widget-code');
+    if (formNear) stamp('form-embed-code');
+  }
+  interactionEvents.forEach(function (ev) { window.addEventListener(ev, onInteract, { passive: true }); });
+  var formBox = document.getElementById('contact-form');
+  if (formBox) {
+    if ('IntersectionObserver' in window) {
+      var formIo = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        formIo.disconnect();
+        formNear = true;
+        if (interacted) stamp('form-embed-code');
+        else setTimeout(function () { stamp('form-embed-code'); }, 3500);
+      }, { rootMargin: '800px 0px' });
+      formIo.observe(formBox);
+    } else {
+      stamp('form-embed-code');
+    }
+  }
+
   // Contact us: bring the whole form into the middle of the screen, below the header and above the phone buttons
   function headerHeight() {
     var h = document.querySelector('.site-header');
@@ -58,6 +95,7 @@
   function goToForm() {
     var form = document.getElementById('contact-form');
     if (!form) { window.location.href = '/contact/#contact'; return; }
+    stamp('form-embed-code');
     setMenu(false);
     var top = headerHeight();
     var room = window.innerHeight - top - barHeight();

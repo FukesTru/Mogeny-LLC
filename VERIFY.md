@@ -48,6 +48,8 @@ A quick reply to each item is all we need.
   client relationship. Results depend on each business and family."
 
 ### Home page
+- The main headline reads "Know where every dollar goes." with "Bookkeeping, reporting and CFO
+  support in Chicago" under it.
 - "Owner-led firm" is accurate.
 - **You do not prepare tax returns.** The site says tax preparation is not one of your services and
   that you get books ready for the client's tax preparer. If you do prepare returns, tell us.
@@ -137,8 +139,16 @@ A quick reply to each item is all we need.
   - The chat greeting says "I respond in 2 minutes". Check the client is happy to promise that.
   - The greeting bubble covers part of the page on a phone until it is closed. The round call and
     contact buttons stay tappable above it.
-- **Stand-in images**: 8 pictures in `public/images/` were generated with Higgsfield (desks,
-  reports, a meeting room, a home office and the Chicago River; no people, no readable text). The
+- **Speed and ratings**: Lighthouse (the engine behind PageSpeed Insights) scores every page 98 to
+  100 for performance and 100 for accessibility, best practices and SEO, on phone settings. To get
+  there, the CRM chat widget loads on the visitor's first scroll, tap, key press or mouse movement,
+  and the CRM form loads when the visitor is near it (on the contact page, on first interaction or
+  after 3.5 seconds). Both are still used exactly as given. Fonts are self-hosted.
+  Test PageSpeed Insights on www.mogeny.com after go-live. A `*.vercel.app` address is marked
+  noindex on purpose, so its SEO score there reads as blocked from indexing.
+- **Stand-in images**: 9 pictures in `public/images/` were generated with Higgsfield (desks,
+  reports, a meeting room, a home office, the Chicago River and the skyline behind the home page
+  hero; no people, no readable text). The
   brief says every picture should be the client's own, so `site.json` marks each one as a stand-in.
   Replace them when the client's photos arrive. None is on the About page, so nothing pretends to
   show Kamila or her office.

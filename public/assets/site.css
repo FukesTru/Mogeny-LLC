@@ -12,6 +12,14 @@
    Space: content width 1200px, side padding 20px phone / 32px desktop, section padding 72px phone / 120px desktop,
    card padding 28px / 32px, gap 24px / 32px, one radius (14px), one shadow, one border. */
 
+/* Fonts are served from /fonts (latin subset, variable weight; licences beside them). Mogeny Serif is Source
+   Serif 4 trimmed to the weights used, renamed as its licence asks for modified copies. The fallback faces copy
+   the fonts' size and line metrics, so text does not shift when the real fonts arrive. */
+@font-face { font-family: 'Inter'; src: url('/fonts/inter-var.woff2') format('woff2'); font-weight: 400 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mogeny Serif'; src: url('/fonts/mogeny-serif-var.woff2') format('woff2'); font-weight: 500 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Fallback'; src: local('Arial'), local('Helvetica'), local('Liberation Sans'); size-adjust: 106.79%; ascent-override: 90.72%; descent-override: 22.59%; line-gap-override: 0%; }
+@font-face { font-family: 'Serif Fallback'; src: local('Times New Roman'), local('Times'), local('Liberation Serif'); size-adjust: 99.32%; ascent-override: 104.31%; descent-override: 33.73%; line-gap-override: 0%; }
+
 :root {
   --navy: #14213D;
   --navy-deep: #0E182E;
@@ -27,8 +35,8 @@
   --line: #E4DDD1;
   --white: #FFFFFF;
 
-  --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Mogeny Serif', 'Serif Fallback', Georgia, serif;
+  --sans: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
   --fs-h1: clamp(2.25rem, 1.55rem + 3.1vw, 4rem);
   --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.75rem);
@@ -131,6 +139,9 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
 .band-navy .lead, .band-green .lead { color: rgba(255, 255, 255, 0.86); }
 .answer { font-size: var(--fs-lead); line-height: 1.6; margin-top: 20px; }
 .muted { color: var(--muted); }
+.nowrap { white-space: nowrap; }
+.mt-8 { margin-top: 8px; } .mt-12 { margin-top: 12px; } .mt-16 { margin-top: 16px; } .mt-20 { margin-top: 20px; } .mt-24 { margin-top: 24px; }
+.mt-28 { margin-top: 28px; } .mt-32 { margin-top: 32px; } .mt-40 { margin-top: 40px; }
 .small { font-size: var(--fs-small); }
 .rule { width: 48px; height: 3px; background: var(--brass); border: 0; margin: 0 0 20px; border-radius: 2px; }
 
@@ -257,11 +268,29 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
 .mobile-menu a.m-link { display: block; padding: 11px 0; font-size: 1.0625rem; font-weight: 500; color: var(--ink); text-decoration: none; }
 .mobile-menu .m-actions { display: grid; gap: 12px; margin-top: 28px; }
 .mobile-menu .m-actions .btn { width: 100%; }
-.no-js .mobile-menu { position: static; opacity: 1; visibility: visible; transform: none; padding-bottom: 24px; }
-@media (min-width: 1100px) { .mobile-menu, .no-js .mobile-menu { display: none; } }
+@media (min-width: 1100px) { .mobile-menu { display: none; } }
 
 /* Hero */
-.hero { padding: 64px 0 0; position: relative; overflow: hidden; }
+.hero { padding: 64px 0 0; position: relative; overflow: hidden; isolation: isolate; }
+.hero-bg { position: absolute; inset: 0 0 auto 0; height: 860px; z-index: -1; overflow: hidden; background: var(--navy); }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(20, 33, 61, 0.62) 0%, rgba(20, 33, 61, 0.8) 55%, var(--navy) 100%);
+}
+@media (min-width: 1040px) {
+  .hero-bg { inset: 0; height: auto; }
+  .hero-bg img { object-position: 70% 72%; }
+  .hero-bg::after {
+    background:
+      linear-gradient(90deg, rgba(20, 33, 61, 0.95) 0%, rgba(20, 33, 61, 0.84) 40%, rgba(20, 33, 61, 0.42) 72%, rgba(20, 33, 61, 0.3) 100%),
+      linear-gradient(to top, rgba(14, 24, 46, 0.9) 0%, rgba(14, 24, 46, 0) 32%);
+  }
+}
+.h1-sub {
+  display: block; margin-top: 18px; font-family: var(--sans); font-size: clamp(1.125rem, 0.98rem + 0.7vw, 1.5rem);
+  font-weight: 500; line-height: 1.4; letter-spacing: 0; color: #E9D6BF;
+}
 .hero .wrap { position: relative; }
 .hero-grid { display: grid; gap: 48px; padding-bottom: 64px; }
 @media (min-width: 1040px) {
@@ -275,7 +304,7 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
 .band-cream .hero-proof, .band-white .hero-proof { color: var(--muted); }
 .band-cream .hero-proof svg, .band-white .hero-proof svg { color: var(--brass-ink); }
 .hero-panel {
-  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(14, 24, 46, 0.78); border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: calc(var(--radius) + 6px); padding: 28px;
 }
 .hero-panel .panel-title { font-size: var(--fs-eyebrow); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #E2C7A6; margin-bottom: 8px; }
@@ -302,11 +331,7 @@ h4 { font-family: var(--sans); font-size: 1rem; line-height: 1.4; font-weight: 6
   .hero-strip li { padding: 26px 0; }
   .hero-strip li + li { border-top: 0; }
 }
-.hero-lines {
-  position: absolute; right: -120px; top: -80px; width: 560px; height: 560px; pointer-events: none; opacity: 0.5;
-  background: repeating-linear-gradient(90deg, rgba(184, 135, 90, 0.12) 0 1px, transparent 1px 56px);
-  -webkit-mask-image: radial-gradient(closest-side, #000, transparent); mask-image: radial-gradient(closest-side, #000, transparent);
-}
+
 
 /* Page hero for inner pages (cream band, no panel) */
 .page-hero { padding: 56px 0 64px; }
@@ -462,6 +487,19 @@ a.card:hover h3 { color: var(--brass-ink); }
 .prose ul { padding-left: 22px; margin: 0 0 1em; }
 .prose li { margin-bottom: 6px; }
 
+/* Contact page: intro, then the form straight away on a phone; intro and details beside the form on desktop */
+.contact-hero { padding: 28px 0 64px; }
+.contact-hero-grid { display: grid; gap: 28px; grid-template-areas: "intro" "form" "details"; }
+.contact-hero .ch-intro { grid-area: intro; }
+.contact-hero .ch-form { grid-area: form; }
+.contact-hero .ch-details { grid-area: details; }
+.contact-hero .answer { margin-top: 14px; }
+.contact-list.compact { margin-top: 0; }
+@media (min-width: 960px) {
+  .contact-hero { padding: 72px 0 96px; }
+  .contact-hero-grid { grid-template-columns: 5fr 7fr; grid-template-areas: "intro form" "details form"; column-gap: 72px; row-gap: 36px; align-items: start; }
+}
+
 /* Contact section and form */
 .contact-section { scroll-margin-top: calc(var(--header-h) + 16px); }
 .form-card {
@@ -472,7 +510,8 @@ a.card:hover h3 { color: var(--brass-ink); }
 .band-white .form-card { background: var(--cream); }
 .form-card h3 { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 16px; }
 .form-card .form-intro { color: var(--muted); font-size: var(--fs-small); margin-bottom: 18px; }
-.form-embed { min-height: 600px; scroll-margin-top: calc(var(--header-h) + 12px); }
+.form-embed { min-height: 640px; scroll-margin-top: calc(var(--header-h) + 12px); }
+@media (min-width: 960px) { .form-embed { min-height: 600px; } }
 .form-embed iframe { display: block; width: 100%; min-height: 600px; }
 .form-note { font-size: 0.8125rem; color: var(--muted); margin-top: 12px; line-height: 1.4; }
 /* Footer */
@@ -491,6 +530,7 @@ a.card:hover h3 { color: var(--brass-ink); }
 .footer-cols ul { list-style: none; display: grid; gap: 10px; }
 .footer-brand { color: var(--white); margin-bottom: 16px; }
 .footer-brand:hover { color: var(--white); text-decoration: none !important; }
+.footer-brand .brand-word small { color: #E2C7A6; }
 .footer-contact li { display: flex; gap: 10px; align-items: flex-start; }
 .footer-contact svg { width: 18px; height: 18px; color: var(--brass); flex: none; margin-top: 3px; }
 .footer-hours { margin-bottom: 18px; }
@@ -532,6 +572,25 @@ a.card:hover h3 { color: var(--brass-ink); }
 /* Scroll motion. Only when scripts run, and never when reduced motion is asked for. */
 .js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); transition-delay: var(--d, 0s); }
 .js [data-reveal].is-visible { opacity: 1; transform: none; }
+[data-reveal]:nth-child(2) { --d: 0.07s; } [data-reveal]:nth-child(3) { --d: 0.14s; } [data-reveal]:nth-child(4) { --d: 0.21s; }
+[data-reveal]:nth-child(5) { --d: 0.28s; } [data-reveal]:nth-child(6) { --d: 0.35s; }
+
+/* Opening transition. Plays once as a page opens: the header fades in, the hero settles and its lines rise in
+   order. Under a second, never blocks a tap (opacity only), and off entirely for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-header { animation: intro-fade 0.6s ease both; }
+  .intro { animation: intro-rise 0.9s var(--ease) both; animation-delay: var(--intro, 0s); }
+  .intro-2 { --intro: 0.08s; } .intro-3 { --intro: 0.16s; } .intro-4 { --intro: 0.24s; } .intro-5 { --intro: 0.34s; } .intro-6 { --intro: 0.44s; }
+  .hero-bg img { animation: intro-settle 1.8s var(--ease) both; }
+  .page-hero-media img { animation: intro-settle 1.2s var(--ease) both 0.12s; }
+  .hero-strip li { animation: intro-fade 0.8s ease both 0.5s; }
+  .hero-strip li:nth-child(2) { animation-delay: 0.58s; } .hero-strip li:nth-child(3) { animation-delay: 0.66s; } .hero-strip li:nth-child(4) { animation-delay: 0.74s; }
+}
+/* Start at 0.01, not 0: browsers treat fully transparent text as not yet shown, which would make the page look
+   slower to speed tests than it is. 0.01 looks the same to a visitor. */
+@keyframes intro-rise { from { opacity: 0.01; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes intro-fade { from { opacity: 0.01; } to { opacity: 1; } }
+@keyframes intro-settle { from { opacity: 0.01; transform: scale(1.06); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
